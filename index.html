@@ -153,7 +153,7 @@ select:focus,input:focus{border-color:var(--gn);box-shadow:0 0 0 2px #35ff6a33;o
 .sc{background:linear-gradient(#050805,#0b100b)}
 .lbl{text-align:center;font-size:11px;letter-spacing:4px;color:var(--am);margin:0 0 4px;opacity:.85}
 #hdr{container-type:inline-size}
-.startL{text-align:center}.startR>.tag{margin:0 0 8px}
+.startL{text-align:center}.startR>.tag{margin:0 0 8px}.missionStats{display:flex;flex-direction:column;gap:4px;text-align:center;font-size:clamp(10px,1.2vw,14px);font-weight:800;color:var(--am);letter-spacing:.02em;line-height:1.25}.missionStats>div:last-child{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.missionStats #wrongStatus{color:var(--rd)}
 
 /* ================= LANDSCAPE: timer LEFT · setup / game RIGHT ================= */
 @media (orientation:landscape){
@@ -343,6 +343,7 @@ img.logoBig,img.logoBoom{height:auto;object-fit:contain}
  <div class="lbl">⏱ MISSION TIMER</div>
   <div class="lcd" id="lcd">10:00</div>
  <div class="msg" id="msg">SETUP MODE</div>
+ <div id="missionStats" class="missionStats"><div id="stepStatus">STEP 4 of 4 — Defuse the bomb</div><div><span id="speedStatus">Speed x1.00</span><span id="wrongStatus">Wrong wires: 0</span></div></div>
  <div class="lockTag">🔒 MISSION LOCKED — FINISH IT TO RETURN TO MENU</div>
  </div>
 
@@ -390,7 +391,6 @@ img.logoBig,img.logoBoom{height:auto;object-fit:contain}
 
  <!-- GAME -->
  <div id="game" class="hid">
-  <div class="st">STEP 4 of 4 — Defuse the bomb</div>
   <div class="leds"><span id="ledA" class="led r blink">● ARMED</span><span id="ledC" class="led r">● CODE</span><span id="ledW" class="led r">● WIRES</span></div>
   <div class="tries" id="tries"></div>
   <div id="codeArea">
@@ -471,6 +471,8 @@ $("logoBig").src=LOGO;$("logoBoom").src=LOGO;$("logoVic").src=LOGO;
 const COLORS=[["Red","#e22"],["Blue","#26f"],["Green","#2b3"],["Yellow","#ec2"],["White","#eee"],["Black","#333"],["Orange","#f80"]];
 const PL='<svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round"><g class="a"><path d="M29 4L32 30L44 60" stroke="#c4ccd4" stroke-width="7"/><path d="M33 40L44 60" stroke="#d11" stroke-width="10"/></g><g class="b"><path d="M35 4L32 30L20 60" stroke="#a9b2bb" stroke-width="7"/><path d="M31 40L20 60" stroke="#d11" stroke-width="10"/></g><circle cx="32" cy="30" r="4" fill="#777" stroke="#222" stroke-width="2"/></svg>';
 let S="setup",rem=0,speed=1,pass="",entry="",tries=10,good=[],bad=[],kbT="code",cut=[],mode="code",wrongMode="boom",lock=false,tick=null,beepT=0,ac=null,armHold=null,armStart=0,W=[],raf=0;
+$("stepStatus").textContent="STEP 4 of 4 — Defuse the bomb";
+
 
 function audio(){if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();if(ac.state==="suspended")ac.resume();return ac}
 function beep(f=880,d=.1,v=.15,type="square"){try{const a=audio(),o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+d)}catch(e){}}
@@ -580,7 +582,7 @@ function submit(){
 }
 function codeDone(){codeOK=true;$("entry").textContent="✔ ACCEPTED";updTries();if(mode==="both"&&!wiresOK){msg("PASSCODE OK ✔ — NOW CUT THE WIRES");say("Passcode accepted. Cut the wires")}else defuse("")}
 function wiresDone(){wiresOK=true;updTries();if(mode==="both"&&!codeOK){msg("WIRES CUT ✔ — NOW ENTER THE PASSCODE");say("Wires cut. Enter the passcode")}else defuse("")}
-function updTries(){leds();$("tries").textContent=(mode==="both"?"Passcode "+(codeOK?"✔":"✘")+"  Wires "+(wiresOK?"✔":"✘")+"   ":"")+(mode==="wire"?"":"Attempts left: "+tries+"/10   ")+"Speed x"+speed.toFixed(2)+(mode!=="code"&&wrongMode==="boom"?"   Wrong wires: "+wrongCnt+"/"+wrongLimit:"")}
+function updTries(){leds();$("tries").textContent=(mode==="both"?"Passcode "+(codeOK?"✔":"✘")+"  Wires "+(wiresOK?"✔":"✘")+"   ":"")+(mode==="wire"?"":"Attempts left: "+tries+"/10   ")+"Speed x"+speed.toFixed(2)+(mode!=="code"&&wrongMode==="boom"?"   Wrong wires: "+wrongCnt+"/"+wrongLimit:"");$("speedStatus").textContent="Speed x"+speed.toFixed(2);$("wrongStatus").textContent="Wrong wires: "+wrongCnt+(wrongMode==="boom"?"/"+wrongLimit:"")}
 
 // ---------- curly wires ----------
 function curlyPts(){
