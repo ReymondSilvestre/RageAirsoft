@@ -7,6 +7,8 @@ DEPLOY TO VERCEL
 4. Open the HTTPS Vercel URL while online.
 5. Wait a few seconds for the service worker to install and cache the app.
 6. On supported browsers, use Install App / Add to Home Screen.
+7. Tap the ⛶ FULLSCREEN button in the game to request fullscreen. Android Chrome generally supports this after a tap.
+8. On iPhone/iPad, Safari does not provide reliable fullscreen for ordinary webpages; use Share → Add to Home Screen, then launch the installed app to open without Safari address/navigation bars.
 
 OFFLINE USE
 - Open the deployed app once while connected to the internet.
@@ -16,5 +18,5 @@ OFFLINE USE
 NOTES
 - This is offline support for the game shell. The app does not currently sync game results to Firebase or another cloud database.
 - Any music selected by the user is a local file selection and must be selected again if the browser session/device does not retain it.
-- Browser support for installing PWAs varies. Service workers require HTTPS (Vercel provides HTTPS).
+- Fullscreen support varies by mobile browser. A webpage cannot force every browser to hide its address bar; the installed PWA experience is the most reliable option. Browser support for installing PWAs varies. Service workers require HTTPS (Vercel provides HTTPS).
 - When updating the website, deploy the new files and reload the app while online to receive the update.
