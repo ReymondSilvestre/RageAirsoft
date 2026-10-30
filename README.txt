@@ -1,22 +1,33 @@
-R.A.G.E Airsoft Mission Simulation — Offline PWA
+R.A.G.E AIRSOFT OFFLINE PWA
+===========================
+
+FILES
+- index.html: game with phone-sized responsive layout and fullscreen control
+- manifest.json: installable app metadata
+- service-worker.js: offline caching
+- icons/: your R.A.G.E. logo used for browser favicon, iPhone home-screen icon,
+  and Android/PWA installation icon
 
 DEPLOY TO VERCEL
 1. Extract this ZIP.
-2. Upload the contents of this folder to a GitHub repository (index.html must be at the repository root).
-3. Import that repository into Vercel and deploy.
-4. Open the HTTPS Vercel URL while online.
-5. Wait a few seconds for the service worker to install and cache the app.
-6. On supported browsers, use Install App / Add to Home Screen.
-7. Tap the ⛶ FULLSCREEN button in the game to request fullscreen. Android Chrome generally supports this after a tap.
-8. On iPhone/iPad, Safari does not provide reliable fullscreen for ordinary webpages; use Share → Add to Home Screen, then launch the installed app to open without Safari address/navigation bars.
+2. Upload the contents of the rage_airsoft_offline folder to your GitHub repository.
+   Keep index.html, manifest.json and service-worker.js at the repository root.
+3. Import the repository into Vercel and deploy.
+4. Open the HTTPS site once while online and wait for it to finish loading.
+5. On Android Chrome, use Install app / Add to Home screen.
+   On iPhone Safari, tap Share > Add to Home Screen.
+6. Open the installed app. The R.A.G.E. logo is used as its app icon.
 
-OFFLINE USE
-- Open the deployed app once while connected to the internet.
-- After it has cached successfully, disconnect from the internet and reopen it.
-- The self-contained game interface and its built-in JavaScript should load offline.
+OFFLINE
+The app shell and logo assets are cached after the first successful online visit.
+Open the installed app once online before testing airplane mode.
 
-NOTES
-- This is offline support for the game shell. The app does not currently sync game results to Firebase or another cloud database.
-- Any music selected by the user is a local file selection and must be selected again if the browser session/device does not retain it.
-- Fullscreen support varies by mobile browser. A webpage cannot force every browser to hide its address bar; the installed PWA experience is the most reliable option. Browser support for installing PWAs varies. Service workers require HTTPS (Vercel provides HTTPS).
-- When updating the website, deploy the new files and reload the app while online to receive the update.
+FULLSCREEN
+The fullscreen control requests fullscreen where the browser supports it.
+Some mobile browsers restrict fullscreen from ordinary web pages. Installing
+the PWA to the home screen gives the best app-like display and removes the
+normal browser address bar where supported.
+
+PHONE DISPLAY
+The game uses the available phone viewport width and height and accounts for
+safe areas around notches and home indicators.
